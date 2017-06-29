@@ -28,3 +28,7 @@ Route::resource('posts', 'PostsController');
 // slug
 
 Route::get('blog/{slug}', ['as' => 'blog.single', 'uses' => 'BlogController@Single'])->where('slug', '[\w\d\-\_]+');
+
+// auth 
+
+Auth::routes();

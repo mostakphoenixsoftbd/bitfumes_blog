@@ -16,7 +16,7 @@
 
       @include('partials._message')
 
-      @yield('main')
+      @yield('content')
 
     </div>
 
