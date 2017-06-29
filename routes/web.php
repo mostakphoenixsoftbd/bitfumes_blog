@@ -20,3 +20,11 @@ Route::get('about', 'PagesController@about');
 Route::get('blog', 'PagesController@blog');
 
 Route::get('contact', 'PagesController@contact')->name('pages.contact');
+
+// posts
+
+Route::resource('posts', 'PostsController');
+
+// slug
+
+Route::get('blog/{slug}', ['as' => 'blog.single', 'uses' => 'BlogController@Single'])->where('slug', '[\w\d\-\_]+');
