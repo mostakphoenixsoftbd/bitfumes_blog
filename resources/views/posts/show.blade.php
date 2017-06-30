@@ -12,6 +12,12 @@
       <h1>{{ $post->title }}</h1>
     </div>
 
+    @if ($post->category_id == true)
+      <a class="btn btn-info btn-sm" href="{{ route('categories.show', $post->category->id) }}">{{ $post->category->name }}</a>
+    @elseif ($post->category_id == null)
+      <a class="btn btn-info btn-sm" href="{{ route('posts.edit', $post->id) }}">Uncategorized</a>
+    @endif
+
     <p>
       this post was created by <strong>{{ $post->user->name }} , {{ $post->created_at->diffForHumans() }}</strong>
     </p>

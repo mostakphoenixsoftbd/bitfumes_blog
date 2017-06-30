@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Category;
 use Session;
 use Auth;
 
@@ -35,7 +36,9 @@ class PostsController extends Controller
      */
     public function create()
     {
-      return view('posts.create');
+      $categories = Category::pluck('name', 'id');
+
+      return view('posts.create')->withCategories($categories);
     }
 
     /**
@@ -47,14 +50,16 @@ class PostsController extends Controller
     public function store(Request $request)
     {
       $this->validate($request, [
-        'title' => 'required|unique:posts|max:255',
-        'slug'  => 'required|alpha_dash|unique:posts|min:5|max:255',
-        'body'  => 'required'
+        'title'       => 'required|unique:posts|max:255',
+        'category_id' => 'required|integer',
+        'slug'        => 'required|alpha_dash|unique:posts|min:5|max:255',
+        'body'        => 'required'
       ]);
 
       $post = new Post;
 
       $post->title = $request->title;
+      $post->category_id = $request->category_id;
       $post->slug = $request->slug;
       $post->body = $request->body;
       $post->user_id = Auth::user()->id;
@@ -87,6 +92,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
+      $categories = Category::pluck('name', 'id');
+
       $post = Post::find($id);
 
       if ( $post->user_id !== Auth::user()->id )
@@ -97,7 +104,7 @@ class PostsController extends Controller
         return redirect()->route('posts.index');
       }
 
-      return view('posts.edit')->withPost($post);
+      return view('posts.edit')->withPost($post)->withCategories($categories);
     }
 
     /**
@@ -111,6 +118,7 @@ class PostsController extends Controller
     {
       $this->validate($request, [
         'title' => 'required|max:255',
+        'category_id' => 'required|integer',
         'slug'  => 'required|alpha_dash|min:5|max:255',
         'body'  => 'required'
       ]);
@@ -118,6 +126,7 @@ class PostsController extends Controller
       $post = Post::find($id);
 
       $post->title = $request->title;
+      $post->category_id = $request->category_id;
       $post->slug = $request->slug;
       $post->body = $request->body;
 

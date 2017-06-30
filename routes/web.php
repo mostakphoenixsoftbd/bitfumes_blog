@@ -29,6 +29,20 @@ Route::resource('posts', 'PostsController');
 
 Route::get('blog/{slug}', ['as' => 'blog.single', 'uses' => 'BlogController@Single'])->where('slug', '[\w\d\-\_]+');
 
-// auth 
+// auth
 
 Auth::routes();
+
+// categories
+
+Route::get('categories', 'CategoriesController@index')->name('categories.index');
+
+Route::post('categories', 'CategoriesController@store')->name('categories.store');
+
+Route::get('categories/{category}', 'CategoriesController@show')->name('categories.show');
+
+Route::get('categories/{category}/edit', 'CategoriesController@edit')->name('categories.edit');
+
+Route::put('categories/{category}', 'CategoriesController@update')->name('categories.update');
+
+Route::delete('categories/{category}', 'CategoriesController@destroy')->name('categories.destroy');

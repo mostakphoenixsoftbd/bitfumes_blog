@@ -40,6 +40,8 @@
                   <ul class="dropdown-menu" role="menu">
                       <li class="{{ Request::is("posts") ? "active" : "" }}"><a href="/posts">All posts</a></li>
 
+                      <li class="{{ Request::is("categories") ? "active" : "" }}"><a href="/categories">All categories</a></li>
+
                       <li class="{{ Request::is("posts/create") ? "active" : "" }}"><a href="/posts/create">Create post</a></li>
 
                       <li>
