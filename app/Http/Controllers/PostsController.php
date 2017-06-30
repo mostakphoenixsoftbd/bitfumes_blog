@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use Session;
+use Auth;
 
 class PostsController extends Controller
 {
@@ -17,7 +18,7 @@ class PostsController extends Controller
     public function __construct(){
 
       $this->middleware('auth');
-      
+
     }
 
     public function index()
@@ -56,6 +57,7 @@ class PostsController extends Controller
       $post->title = $request->title;
       $post->slug = $request->slug;
       $post->body = $request->body;
+      $post->user_id = Auth::user()->id;
 
       $post->save();
 
@@ -86,6 +88,14 @@ class PostsController extends Controller
     public function edit($id)
     {
       $post = Post::find($id);
+
+      if ( $post->user_id !== Auth::user()->id )
+
+      {
+        Session::flash('danger', 'you are not authorized to edit this post !');
+
+        return redirect()->route('posts.index');
+      }
 
       return view('posts.edit')->withPost($post);
     }
@@ -127,6 +137,14 @@ class PostsController extends Controller
     public function destroy($id)
     {
       $post = Post::find($id);
+
+      if ( $post->user_id !== Auth::user()->id )
+
+      {
+        Session::flash('danger', 'you are not authorized to edit this post !');
+
+        return redirect()->route('posts.index');
+      }
 
       $post->delete();
 

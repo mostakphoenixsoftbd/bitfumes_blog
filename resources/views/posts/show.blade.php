@@ -12,6 +12,10 @@
       <h1>{{ $post->title }}</h1>
     </div>
 
+    <p>
+      this post was created by <strong>{{ $post->user->name }} , {{ $post->created_at->diffForHumans() }}</strong>
+    </p>
+
     <div class="input-group">
       <span class="input-group-addon" id="basic-addon1">@</span>
       <input type="text" class="form-control" placeholder="{{ $post->slug }}" aria-describedby="basic-addon1">
