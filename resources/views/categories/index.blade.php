@@ -10,34 +10,37 @@
     <div class="page-header">
       <h1>All Categories</h1>
     </div>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>name</th>
-          <th>created at</th>
-          <th>action</th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach ($categories as $category)
+    @if (count($categories) > 0)
+      <table class="table">
+        <thead>
           <tr>
-            <td>{{ $category->id }}</td>
-            <td>{{ $category->name }}</td>
-            <td>{{ $category->created_at->diffForHumans() }}</td>
-            <td>
-              <div class="btn-group">
-                <a class="btn btn-default btn-sm" href="{{ route('categories.show', $category->id) }}">View</a>
-              </div>
-              <div class="btn-group">
-                <a class="btn btn-primary btn-sm" href="{{ route('categories.edit', $category->id) }}">Edit</a>
-              </div>
-            </td>
+            <th>#</th>
+            <th>name</th>
+            <th>created at</th>
+            <th>action</th>
           </tr>
-        @endforeach
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @foreach ($categories as $category)
+            <tr>
+              <td>{{ $category->id }}</td>
+              <td>{{ $category->name }}</td>
+              <td>{{ $category->created_at->diffForHumans() }}</td>
+              <td>
+                <div class="btn-group">
+                  <a class="btn btn-default btn-sm" href="{{ route('categories.show', $category->id) }}">View</a>
+                </div>
+                <div class="btn-group">
+                  <a class="btn btn-primary btn-sm" href="{{ route('categories.edit', $category->id) }}">Edit</a>
+                </div>
+              </td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
+    @else
+      <p class="alert alert-info">There haven't been any category created yet, be the first !</p>
+    @endif
   </div>
   <div class="col-md-4 col-md-offset-2">
     <div class="page-header">

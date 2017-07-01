@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
+use App\Tag;
 use Session;
 use Auth;
 
@@ -37,8 +38,9 @@ class PostsController extends Controller
     public function create()
     {
       $categories = Category::pluck('name', 'id');
+      $tags = Tag::pluck('name', 'id');
 
-      return view('posts.create')->withCategories($categories);
+      return view('posts.create')->withCategories($categories)->withTags($tags);
     }
 
     /**
@@ -65,6 +67,7 @@ class PostsController extends Controller
       $post->user_id = Auth::user()->id;
 
       $post->save();
+      $post->tags()->sync($request->tags, false);
 
       Session::flash('success', 'Post was successfully created !');
 
@@ -96,6 +99,8 @@ class PostsController extends Controller
 
       $post = Post::find($id);
 
+      $tags = Tag::pluck('name','id');
+
       if ( $post->user_id !== Auth::user()->id )
 
       {
@@ -104,7 +109,7 @@ class PostsController extends Controller
         return redirect()->route('posts.index');
       }
 
-      return view('posts.edit')->withPost($post)->withCategories($categories);
+      return view('posts.edit')->withPost($post)->withCategories($categories)->withTags($tags);
     }
 
     /**
@@ -132,6 +137,13 @@ class PostsController extends Controller
 
       $post->save();
 
+      if (isset($request->tags)) {
+        $post->tags()->sync($request->tags);
+      }
+      else {
+        $post->tags()->sync(array());
+      }
+
       Session::flash('success', 'Post was successfully updated !');
 
       return redirect()->route('posts.show', $post->id);
@@ -154,6 +166,8 @@ class PostsController extends Controller
 
         return redirect()->route('posts.index');
       }
+
+      $post->tags()->detach();
 
       $post->delete();
 

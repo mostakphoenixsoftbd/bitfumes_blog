@@ -46,3 +46,17 @@ Route::get('categories/{category}/edit', 'CategoriesController@edit')->name('cat
 Route::put('categories/{category}', 'CategoriesController@update')->name('categories.update');
 
 Route::delete('categories/{category}', 'CategoriesController@destroy')->name('categories.destroy');
+
+// tags
+
+Route::get('tags', 'TagsController@index')->name('tags.index');
+
+Route::post('tags', 'TagsController@store')->name('tags.store');
+
+Route::get('tags/{tag}', 'TagsController@show')->name('tags.show');
+
+Route::get('tags/{tag}/edit', 'TagsController@edit')->name('tags.edit');
+
+Route::put('tags/{tag}', 'TagsController@update')->name('tags.update');
+
+Route::delete('tags/{tag}', 'TagsController@destroy')->name('tags.destroy');

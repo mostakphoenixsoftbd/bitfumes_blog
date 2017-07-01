@@ -42,6 +42,8 @@
 
                       <li class="{{ Request::is("categories") ? "active" : "" }}"><a href="/categories">All categories</a></li>
 
+                      <li class="{{ Request::is("tags") ? "active" : "" }}"><a href="/tags">All tags</a></li>
+
                       <li class="{{ Request::is("posts/create") ? "active" : "" }}"><a href="/posts/create">Create post</a></li>
 
                       <li>

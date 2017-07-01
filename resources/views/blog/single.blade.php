@@ -11,7 +11,13 @@
     <div class="page-header">
       <h1>{{ $post->title }}</h1>
     </div>
-    
+
+    @if ($post->category_id == true)
+      <a class="btn btn-info btn-sm" href="{{ route('categories.show', $post->category->id) }}">{{ $post->category->name }}</a>
+    @elseif ($post->category_id == null)
+      <a class="btn btn-info btn-sm" href="{{ route('posts.edit', $post->id) }}">Uncategorized</a>
+    @endif
+
     <p>
       this post was created by <strong>{{ $post->user->name }} , {{ $post->created_at->diffForHumans() }}</strong>
     </p>
@@ -19,6 +25,12 @@
     <div class="input-group">
       <span class="input-group-addon" id="basic-addon1">@</span>
       <input type="text" class="form-control" placeholder="{{ $post->slug }}" aria-describedby="basic-addon1">
+    </div>
+    <br>
+    <div class="tags">
+      @foreach ($post->tags as $tag)
+        <span class="label label-default">{{ $tag->name }}</span>
+      @endforeach
     </div>
     <br>
       <p class="lead">

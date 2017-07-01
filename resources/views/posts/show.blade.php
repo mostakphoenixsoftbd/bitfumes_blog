@@ -27,6 +27,12 @@
       <input type="text" class="form-control" placeholder="{{ $post->slug }}" aria-describedby="basic-addon1">
     </div>
     <br>
+    <div class="tags">
+      @foreach ($post->tags as $tag)
+        <span class="label label-default">{{ $tag->name }}</span>
+      @endforeach
+    </div>
+    <br>
       <p class="lead">
         {{ $post->body }}
       </p>

@@ -2,6 +2,10 @@
 
 @section('title', 'Create')
 
+@section('stylesheets')
+  {{ Html::style('css/select2.min.css') }}
+@stop
+
 @section('content')
 
 <div class="row">
@@ -14,6 +18,11 @@
       <div class="form-group">
         {{ Form::label('title', 'Title :') }}
         {{ Form::text('title', null , array('class' => 'form-control')) }}
+      </div>
+
+      <div class="form-group">
+        {{ Form::label('tags', 'Tags :') }}
+        {!! Form::select('tags', $tags, null, ['class' => 'form-control select2-multi', 'multiple' => 'multiple', 'name' => 'tags[]']) !!}﻿
       </div>
 
       <div class="form-group">
@@ -38,4 +47,12 @@
   </div>
 </div>
 
+@stop
+
+@section('scripts')
+  {{ Html::script('/js/select2.full.min.js') }}
+
+  <script type="text/javascript">
+    $('.select2-multi').select2();
+  </script>
 @stop
